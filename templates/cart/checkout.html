@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+        <!-- ****** Checkout Area Start ****** -->
+        <div class="checkout_area section_padding_100">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12 col-md-6">
+                        <div class="checkout_details_area mt-50 clearfix">
+
+                            <div class="cart-page-heading">
+                                <h5>Your data</h5>
+                                <p>Thanks for choosing</p>
+                            </div>
+                            <form action="{% url "order:order_create" %}" method="post" class="order-form">
+                                {{ form.name }}<br>
+                                {{ form.phone_number }}<br>
+                                {{ form.email }}<br>
+{#                                {{ form.as_p }}#}
+                                <p><input type="submit" class="btn btn-pill btn-danger" value="Place order"></p>
+                                {% csrf_token %}
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-5 ml-lg-auto">
+                        <div class="order-details-confirmation">
+
+                            <div class="cart-page-heading">
+                                <h5>Your Order</h5>
+                                <p>The Details</p>
+                            </div>
+
+                            <ul class="order-details-form mb-4">
+                                {% for item in cart %}
+                                    <li>
+                                        {{ item.quantity }}x {{ item.product.name }}
+                                        <span>${{ item.total_price }}</span>
+                                    </li>
+{#                                    <li><span>Product</span> <span>Total</span></li>#}
+{#                                    <li><span>{{ item.product.name }}</span> <span>$ {{ item.quantity }}</span></li>#}
+{#                                    <li><span>Shipping</span> <span>Free</span></li>#}
+{#                                    <li><span>Total</span> <span>$ {{ item.total_price }}</span></li>#}
+                                {% endfor %}
+                            </ul>
+                            <p>Total: ${{ cart.get_total_price }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ****** Checkout Area End ****** -->
+{% endblock content %}

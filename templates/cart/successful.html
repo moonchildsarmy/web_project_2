@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+    <i class="fa fa-check-circle-o" style="margin-left: 620px;margin-top: 100px;color: #0D84DB;font-size: 100px"></i>
+<h1 style="margin-bottom: 20px;margin-left: 550px">Thank you</h1>
+    <p style="margin-left: 400px;margin-bottom: 150px">Your order has been successfully completed.
+        Your order number is <strong>{{ order.id }}</strong>.</p>
+{% endblock %}

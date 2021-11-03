@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+        <!-- ****** Cart Area Start ****** -->
+        <div class="cart_area section_padding_100 clearfix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="cart-table clearfix">
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in cart %}
+                                        {% with product=item.product  %}
+                                            <tr>
+                                                <td class="cart_product_img d-flex align-items-center">
+                                                    <a href="{{ product.get_absolute_url }}"><img src="{% if product.image_1 %}{{ product.image_1.url }}{% else %}{%  static 'img/product-img/1.jpg' %} {% endif %}" alt="Product"></a>
+                                                    <h6>{{ product.name }}</h6>
+                                                </td>
+                                                <td class="price"><span>$ {{ item.price }}</span></td>
+                                                <td class="quantity"><span>{{ item.quantity }}</span></td>
+                                                <td class="num">${{ item.total_price }}</td>
+                                                 <td><a class="btn btn-danger" href="{% url 'cart:cart_remove' product.id %}"><i class="fa fa-trash"></i></a></td>
+                                                <td><a class="btn btn-warning" data-toggle="modal" data-target="#sndModal{{ item.id }}"><i class="fa fa-pencil"></i></a></td>
+                                                <div id="sndModal{{ item.id }}" class="modal fade" tabindex="-1">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Update modal</h5>
+                                                                <button class="close" data-dismiss="modal">x</button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form action="{%  url 'cart:cart_add' product.id %}" method="post">
+                                                                    {% csrf_token %}
+                                                                        <label class="form-label_1", style="font-weight: bold">Количество</label>
+                                                                            {{ item.update_quantity_form.quantity }}
+                                                                            {{ item.update_quantity_form.update }}
+                                                                            <input type="submit" value="Update">
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </tr>
+                                        {% endwith %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="cart-footer d-flex mt-30">
+                            <div class="back-to-shop w-50">
+                                <a href="{% url 'product' %}">Continue shoping</a>
+                                <a href="{% url "order:checkout" %}">Checkout</a>
+                            </div>
+                            <div class="update-checkout w-50 text-right">
+                                <a style="margin-bottom: 100px"><span><strong>Total</strong></span> <span><strong>{{ cart.get_total_price }}</strong></span></a>
+{#                                <a href="#">clear cart</a>#}
+{#                                <a href="#">Update cart</a>#}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+{##}
+{#                <div class="row">#}
+{#                    <div class="col-12 col-lg-4">#}
+{#                        <div class="cart-total-area mt-70">#}
+{#                            <div class="cart-page-heading">#}
+{#                                <h5>Cart total</h5>#}
+{#                                <p>Final info</p>#}
+{#                            </div>#}
+{##}
+{#                            <ul class="cart-total-chart">#}
+{#                                <li><span>Subtotal</span> <span>$59.90</span></li>#}
+{#                                <li><span>Shipping</span> <span>Free</span></li>#}
+{#                                <li><span><strong>Total</strong></span> <span><strong>{{ cart.get_total_price }}</strong></span></li>#}
+{#                            </ul>#}
+{#                            <a href="{% url "order:checkout" %}" class="btn karl-checkout-btn">Proceed to checkout</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+        <!-- ****** Cart Area End ****** -->
+{% endblock content %}
