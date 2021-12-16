@@ -15,8 +15,7 @@ import dj_database_url
 
 
 db_from_env = dj_database_url.config()
-DATABASE['default'].update(db_from_env)
-
+DATABASES['default'].update(db_from_env)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,7 +27,7 @@ CART_SESSION_ID = 'cart'
 SECRET_KEY = 'django-insecure-#8(*p*9z6lqa^b@un+ga02$e!r%+k2@_l)=+f+^k-$q-&hp(&u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
